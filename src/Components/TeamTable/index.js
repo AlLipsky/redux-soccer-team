@@ -3,24 +3,30 @@ import { TeamTableRow } from "../TableComponent/TeamTableRow";
 import { Loader } from "../../Utils/Loader/Loader";
 import "./style.css";
 
-const TeamTable = ({
-  teamList,
-  addToFavoriteInputHandler,
-  favoriteElements,
-}) => {
-  console.log(teamList);
+const TeamTable = ({ teamList, addTofavorite, favoriteTeamList }) => {
   const teamRowsArray =
-    teamList[0].map((team, index) => {
-      return (
-        <TeamTableRow
-          {...team}
-          key={index}
-          index={index + 1}
-          isChecked={favoriteElements.includes(index + 1)}
-          addToFavoriteInputHandler={() => addToFavoriteInputHandler(index + 1)}
-        />
-      );
-    }) || [];
+    (teamList &&
+      teamList.teams.length &&
+      teamList.teams.map((team, index) => {
+        return (
+          <TeamTableRow
+            {...team}
+            key={index}
+            index={index + 1}
+            isChecked={favoriteTeamList.includes(index + 1)}
+            addToFavoriteInputHandler={() => {
+              if (favoriteTeamList.includes(index + 1)) {
+                addTofavorite(
+                  favoriteTeamList.filter((item) => item !== index + 1)
+                );
+              } else {
+                addTofavorite([...favoriteTeamList, index + 1]);
+              }
+            }}
+          />
+        );
+      })) ||
+    [];
   return teamRowsArray.length > 0 ? (
     <Table striped bordered className="table">
       <thead>
