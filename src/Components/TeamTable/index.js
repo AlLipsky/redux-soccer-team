@@ -4,6 +4,7 @@ import { Loader } from "../../Utils/Loader/Loader";
 import "./style.css";
 
 const TeamTable = ({ teamList, addTofavorite, favoriteTeamList }) => {
+  console.log("favoriteTeamList", favoriteTeamList);
   const teamRowsArray =
     (teamList &&
       teamList.teams.length &&
@@ -14,15 +15,9 @@ const TeamTable = ({ teamList, addTofavorite, favoriteTeamList }) => {
             key={index}
             index={index + 1}
             isChecked={favoriteTeamList.includes(index + 1)}
-            addToFavoriteInputHandler={() => {
-              if (favoriteTeamList.includes(index + 1)) {
-                addTofavorite(
-                  favoriteTeamList.filter((item) => item !== index + 1)
-                );
-              } else {
-                addTofavorite([...favoriteTeamList, index + 1]);
-              }
-            }}
+            addToFavoriteInputHandler={() =>
+              addTofavorite(index, favoriteTeamList)
+            }
           />
         );
       })) ||

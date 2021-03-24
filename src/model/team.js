@@ -2,7 +2,7 @@ import axios from "axios";
 import { createSelector } from "reselect";
 
 export const moduleName = "team";
-export const FETCH_SOCCER_TEAM_LIST = `${moduleName}/INIT_CURRENCY_TITLE_LIST`;
+export const FETCH_SOCCER_TEAM_LIST = `${moduleName}/INIT_SOCCER_TEAM_LIST`;
 export const ADD_TO_FAVORITE = `${moduleName}/ADD_TO_FAVORITE`;
 
 export const initialState = {
@@ -54,7 +54,17 @@ export const fetchData = () => (dispatch) => {
     );
 };
 
-export const addTofavorite = (favoriteList) => ({
-  type: ADD_TO_FAVORITE,
-  payload: favoriteList,
-});
+export const addTofavorite = (index, favoriteTeamList) => (dispatch) => {
+  let newFavoriteTeamList = [...favoriteTeamList];
+  if (favoriteTeamList.includes(index + 1)) {
+    newFavoriteTeamList = [...newFavoriteTeamList].filter(
+      (item) => item !== index + 1
+    );
+  } else {
+    newFavoriteTeamList = [...favoriteTeamList, index + 1];
+  }
+  dispatch({
+    type: ADD_TO_FAVORITE,
+    payload: newFavoriteTeamList,
+  });
+};

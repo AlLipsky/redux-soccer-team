@@ -11,7 +11,6 @@ import TeamTable from "./Components/TeamTable";
 
 const App = ({ fetchData, ...props }) => {
   useEffect(() => fetchData(), [fetchData]);
-
   return (
     <div className="container">
       <TeamTable {...props} />
