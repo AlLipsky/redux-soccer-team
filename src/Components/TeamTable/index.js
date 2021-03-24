@@ -15,9 +15,7 @@ const TeamTable = ({ teamList, addTofavorite, favoriteTeamList }) => {
             key={index}
             index={index + 1}
             isChecked={favoriteTeamList.includes(index + 1)}
-            addToFavoriteInputHandler={() =>
-              addTofavorite(index, favoriteTeamList)
-            }
+            addToFavoriteInputHandler={() => addTofavorite(index)}
           />
         );
       })) ||

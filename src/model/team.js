@@ -54,7 +54,8 @@ export const fetchData = () => (dispatch) => {
     );
 };
 
-export const addTofavorite = (index, favoriteTeamList) => (dispatch) => {
+export const addTofavorite = (index) => (dispatch, getState) => {
+  let { favoriteTeamList } = getState()[moduleName];
   let newFavoriteTeamList = [...favoriteTeamList];
   if (favoriteTeamList.includes(index + 1)) {
     newFavoriteTeamList = [...newFavoriteTeamList].filter(
