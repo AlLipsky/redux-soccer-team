@@ -1,8 +1,8 @@
-import axios from "axios";
 import { createSelector } from "reselect";
 
 export const moduleName = "team";
-export const FETCH_SOCCER_TEAM_LIST = `${moduleName}/INIT_SOCCER_TEAM_LIST`;
+export const FETCH_SOCCER_TEAM_LIST_REQUEST = `${moduleName}/FETCH_SOCCER_TEAM_LIST_REQUEST`;
+export const FETCH_SOCCER_TEAM_LIST_SUCCESS = `${moduleName}/FETCH_SOCCER_TEAM_LIST_SUCCESS`;
 export const ADD_TO_FAVORITE = `${moduleName}/ADD_TO_FAVORITE`;
 
 export const initialState = {
@@ -16,7 +16,7 @@ export const initialState = {
 export default function reducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case FETCH_SOCCER_TEAM_LIST:
+    case FETCH_SOCCER_TEAM_LIST_SUCCESS:
       return { ...state, teamList: payload };
       break;
     case ADD_TO_FAVORITE:
@@ -35,24 +35,28 @@ export const favoriteTeamListSelector = createSelector(
   (state) => state.favoriteTeamList
 );
 
-export const fetchData = () => (dispatch) => {
-  const { data } = axios
-    .get(
-      "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League"
-    )
-    .then(({ data }) => {
-      dispatch({
-        type: FETCH_SOCCER_TEAM_LIST,
-        payload: { ...data },
-      });
-    })
-    .catch((error) =>
-      dispatch({
-        type: FETCH_SOCCER_TEAM_LIST,
-        payload: null,
-      })
-    );
-};
+export const fetchData = () => ({
+  type: FETCH_SOCCER_TEAM_LIST_REQUEST
+})
+
+// export const fetchData = () => (dispatch) => {
+//   const { data } = axios
+//     .get(
+//       "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League"
+//     )
+//     .then(({ data }) => {
+//       dispatch({
+//         type: FETCH_SOCCER_TEAM_LIST,
+//         payload: { ...data },
+//       });
+//     })
+//     .catch((error) =>
+//       dispatch({
+//         type: FETCH_SOCCER_TEAM_LIST,
+//         payload: null,
+//       })
+//     );
+// };
 
 export const addTofavorite = (index) => (dispatch, getState) => {
   let { favoriteTeamList } = getState()[moduleName];
